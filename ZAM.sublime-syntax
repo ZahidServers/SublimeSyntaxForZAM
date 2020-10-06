@@ -1,0 +1,45 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+file_extensions:
+  - zam
+scope: source.example-c
+contexts:
+  main:
+    - match: '"'
+      scope: punctuation.definition.string.begin.example-c
+      push: double_quoted_string
+    - match: '#'
+      scope: punctuation.definition.comment.example-c
+      push: line_comment
+    - match: '\b(ZIF|ZELSE|ZOOP|ZILE|ZHEN|ZEP|ZEND|ZUNC|ZAM|ZOR|ZOT|ZAND|ZUNC|ZETURN|ZONTINUE|ZEREAK|ZO|ZEP|ZELIF)\b'
+      scope: keyword.control.example-c
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.example-c
+    - match: '='
+      scope: keyword.operator.assignment
+    - match: '>'
+      scope: keyword.operator.logical
+    - match: '<'
+      scope: keyword.operator.logical
+    - match: '\b(zirint|zirint_ret|zinput|zinput_num|zlear|zls|zis_num|zis_str|zis_array|zis_zunc|zappend|zop|zextend|zimport|zen|zeadfile|zeritefile|zappendfile|zeletefile|zeckfile|zindow|zdb|zdbv|zerver|zonum|zostr|zocode|zoint|zofloat|zatezime|zime|zate|zatezime_dot|zime_dot|zeplace|zepelement)\b'
+      scope: entity.name.function
+    - match: \[
+      push: brackets
+    - match: \]
+      scope: invalid.illegal.stray-bracket-end
+  double_quoted_string:
+    - meta_scope: string.quoted.double.example-c
+    - match: '\\.'
+      scope: constant.character.escape.example-c
+    - match: '"'
+      scope: punctuation.definition.string.end.example-c
+      pop: true
+  line_comment:
+    - meta_scope: comment.line.example-c
+    - match: $
+      pop: true
+  brackets:
+    - match: \]
+      pop: true
+    - include: main
